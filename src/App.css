@@ -79,7 +79,14 @@ main{
     border-radius: 10px;
     border: 0;
     flex-shrink: 0;
+    cursor: pointer;
+    
   }
+.wbutton:hover,
+.login-butten:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
 .toggle{
     width: 300px;
     height: 38px;
@@ -113,8 +120,8 @@ main{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 90%;
-    margin-top: 7%;
+    height: 200%;
+    margin-top: 5%;
     gap:20px;
 }
 .board{
@@ -124,16 +131,21 @@ main{
     flex-wrap: wrap;
     gap:24px;
 }
+
 .wrap{
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc; 
     border-radius: 12px;
     padding: 16px;
-    width: 17%;
+    width: 210px;
     height: 210px;
     gap:12px;
     box-sizing: border-box;
+  }
+  .wrap:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
   }
 
   .post-title {
@@ -153,3 +165,28 @@ main{
     font-weight: 500;
     color: #626262;
   }
+.sangdanbar{
+  display: flex;
+  justify-content: space-between;
+}
+.buttons-mukum{
+  display: flex;
+  width: 70px;
+  height: 50px;
+  justify-content: flex-end; 
+  gap: 5px;
+}
+.edit-btn{
+  width: 30px;
+  height: 30px;
+  background-color: #5CE1FF;
+  border-radius: 50px;
+  border: 0px;
+}
+.delete-btn{
+  width: 30px;
+  height: 30px;
+  background-color: #FF5C5C;
+  border-radius: 50px;
+  border: 0px;
+}

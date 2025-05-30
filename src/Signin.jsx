@@ -7,7 +7,7 @@ export default function Signin() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
-  const defaultNickname = 'anonymous_' + Math.floor(Math.random() * 1000000)
+  const defaultNickname = 'ubsosoimshiro'+Math.floor(Math.random() * 100000)
 
   const handleSignup = async (e) => {
     e.preventDefault()

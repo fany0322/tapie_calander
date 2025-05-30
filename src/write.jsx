@@ -3,6 +3,8 @@ import './write.css';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
+
 
 function Write({ isLoggedIn, username, handleLogout, goLogin }) {
   const navigate = useNavigate()
@@ -53,13 +55,13 @@ function Write({ isLoggedIn, username, handleLogout, goLogin }) {
   )
   
     function postboard( title, content) {
-       const token = localStorage.getItem("accessToken");
       axios.post( 'https://community-api.tapie.kr/board/posts', {
      "title":title,
     "content":content,
   },{
-    headers: {
-      Authorization: `Bearer ${token}`
+    withCredentials: true,
+    headers:{
+      Authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwiZXhwIjoxNzQ4NTU5MzM4fQ.ixBHLtTycIGq0RtYcHpEpMPi2LsWuacW-I9guVPq4bU"
     }
 }).then((response) => {
       console.log('글 작성 성공:', response.data);

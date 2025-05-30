@@ -6,81 +6,172 @@ import Signup from './Signin.jsx'
 import Write from './write.jsx'
 import axios from 'axios'
 
-function Home({ isLoggedIn, username, showMyPosts, turnon, turnoff, handleLogout, goLogin, gowrite }) {
+function Home({ 
+  isLoggedIn, 
+  username, 
+  showMyPosts, 
+  turnon, 
+  turnoff, 
+  handleLogout, 
+  goLogin, 
+  gowrite 
+}) {
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
     axios.get('https://community-api.tapie.kr/board/posts')
       .then(response => {
-        console.log('응답 테스트 ㅎㅎ', response.data)
         const data = response.data
+
         if (Array.isArray(data)) {
           setPosts(data)
         } else if (Array.isArray(data.posts)) {
           setPosts(data.posts)
         } else {
-          setPosts([]) 
+          setPosts([])
         }
       })
-      .catch(error => {
+      .catch(() => {
         console.error('오류남!!')
       })
   }, [])
 
-  function addP(newPost) {
-    setPosts([...posts, newPost])
+  function handleDelete(postId) {
+    axios.delete(`https://community-api.tapie.kr/board/posts/${postId}`)
+      .then(() => {
+        alert('삭제 성공')
+      })
+      .catch(() => {
+        alert('삭제 실패')
+      })
+  }
+  
+  const handleEdit = (id) => {
+    //navigate(`/edit/${id}`)
+    alert('이동하는거 만드셈')
   }
 
   const filteredPosts = showMyPosts
-    ? posts.filter(post => post.author?.nickname === username)
+    ? posts.filter(post => post.author?.username === username)
     : posts
 
   let Btn1 = 'togglebutton1'
   let Btn2 = 'togglebutton2'
+
   if (!showMyPosts) Btn1 += ' active-button'
   else Btn2 += ' active-button'
+
   return (
     <>
       <header className='head'>
-        <div className='title'>
-          <span onClick={() => navigate('/')}>TAPIE Board</span>
+        <div className='title' onClick={() => navigate('/')}>
+          TAPIE Board
         </div>
+
         <div className='login'>
           {isLoggedIn ? (
             <>
-              <span id='username' style={{ marginRight: '8px', color: 'white', fontSize: '16px', fontWeight: 'bold' }}>{username}</span>
-              <button className='login-butten' onClick={handleLogout} style={{ backgroundColor: '#FFA4A4' }}>&#91;→ 로그아웃</button>
+              <span 
+                id='username' 
+                style={{ 
+                  marginRight: '8px', 
+                  color: 'white', 
+                  fontSize: '16px', 
+                  fontWeight: 'bold' 
+                }}
+              >
+                {username}
+              </span>
+              <button 
+                className='login-butten' 
+                onClick={handleLogout} 
+                style={{ backgroundColor: '#FFA4A4' }}
+              >
+                &#91;→ 로그아웃
+              </button>
             </>
           ) : (
-            <button className='login-butten' onClick={goLogin}>&#91;→ 로그인</button>
+            <button className='login-butten' onClick={goLogin}>
+              &#91;→ 로그인
+            </button>
           )}
         </div>
       </header>
+
       <main>
         <div className='container'>
+
           <div className='write'>
-            <button className='wbutton' onClick={gowrite}>글 작성하기</button>
-            <p>전체글 <span className='count'>{Array.isArray(posts) ? posts.length : 0}</span>개 작성됨</p>
+            <button className='wbutton' onClick={gowrite}>
+              글 작성하기
+            </button>
+            <p>
+              전체글 <span className='count'>{posts.length}</span>개 작성됨
+            </p>
           </div>
+
           <div className='hug'>
+
             <div className='toggle'>
-              <button className={Btn1} onClick={turnon}>전체 글</button>
-              <button className={Btn2} onClick={turnoff}>나의 글</button>
+              <button className={Btn1} onClick={turnon}>
+                전체 글
+              </button>
+              <button className={Btn2} onClick={turnoff}>
+                나의 글
+              </button>
             </div>
-            <div className="board">
-              {Array.isArray(filteredPosts) && filteredPosts.map(post => {
-                const dateonly = post.createdAt.split('T')[0]
-                return (
-                  <div key={post.id} className="wrap">
-                    <p className="post-title">{post.title}</p>
-                    <p className='author'>{post.author?.nickname || '없으'} · {dateonly}</p>
-                    <p className='content'>{post.content}</p>
-                  </div>
+
+            <div className='board'>
+              {showMyPosts ? (
+                isLoggedIn ? (
+                  filteredPosts.length > 0 ? (
+                    filteredPosts.map(post => {
+                      const dateonly = post.createdAt.split('T')[0]
+
+                      return (
+                        <div key={post.id} className='wrap'>
+                          <div className='sangdanbar'>
+                          <p className='post-title'>{post.title}</p>
+                          <div className="buttons-mukum">
+                            <button className="edit-btn" onClick={() => handleEdit(post.id)}>수정</button>
+                            <button className="delete-btn" onClick={() => handleDelete(post.id)}>삭제</button>
+                          </div>
+                          </div>
+                          <p className='author'>
+                            {post.author?.username || '없으'} · {dateonly}
+                          </p>
+                          <p className='content'>{post.content}</p>
+                        </div>
+                      )
+                    })
+                  ) : (
+                    <p>작성한 글이 없습니다.</p>
+                  )
+                ) : (
+                  <p>로그인이 안됐어;;</p>
                 )
-              })}
+              ) : posts.length > 0 ? (
+                posts.map(post => {
+                  const dateonly = post.createdAt.split('T')[0]
+
+                  return (
+                    <div key={post.id} className='wrap'>
+                      <p className='post-title'>{post.title}</p>
+                      <p className='author'>
+                        {post.author?.username || '없으'} · {dateonly}
+                      </p>
+                      <p className='content'>{post.content}</p>
+                    </div>
+                  )
+                })
+              ) : (
+                <p>글이 없습니다.</p>
+              )}
             </div>
+
           </div>
+
         </div>
       </main>
     </>
@@ -96,6 +187,7 @@ function App() {
   useEffect(() => {
     const savedLogin = localStorage.getItem('isLoggedIn')
     const savedUsername = localStorage.getItem('username')
+
     if (savedLogin === 'true') {
       setIsLoggedIn(true)
       setUsername(savedUsername)
@@ -127,6 +219,10 @@ function App() {
   }
 
   function turnoff() {
+    if (!isLoggedIn) {
+      alert('로그인 후 이용해주세요.')
+      return
+    }
     setShowMyPosts(true)
   }
 
@@ -149,12 +245,7 @@ function App() {
       />
       <Route
         path='/login'
-        element={
-          <Login
-            setIsLoggedIn={setIsLoggedIn}
-            setUser={setUsername}
-          />
-        }
+        element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUsername} />}
       />
       <Route path='/signup' element={<Signup />} />
       <Route
