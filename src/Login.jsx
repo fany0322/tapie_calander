@@ -22,9 +22,9 @@ export default function Login({ setUser, setIsLoggedIn }) {
       console.log('로그인 성공 응답:', res.data)
 
       if (res.data.message === '로그인되었습니다') {
-        setUser(username)    // username 상태 업데이트
-        setIsLoggedIn(true)  // 로그인 상태 true로 변경
-        navigate('/')        // 메인 페이지로 이동
+        setUser(username)  
+        setIsLoggedIn(true)  
+        navigate('/')        
       } else {
         setError('로그인 실패: 응답이 올바르지 않습니다.')
       }
