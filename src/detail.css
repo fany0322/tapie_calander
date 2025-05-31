@@ -60,6 +60,8 @@ main{
     height: 80%;
     gap:12px;
     box-sizing: border-box;
+    border:1px solid black;
+    border-radius: 10px;
 }
 .detail-title {
     font-size: 20px;

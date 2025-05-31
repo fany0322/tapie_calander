@@ -11,7 +11,7 @@ function Detail() {
   const [dateOnly, setDateOnly] = useState('');
 
   useEffect(() => {
-    axios.get(`https://community-api.tapie.kr/board/posts/${id}`)
+    axios.get(`/api/board/posts/${id}`)
       .then((res) => {
         setPost(res.data);
         setDateOnly(res.data.createdAt?.split('T')[0] || '');

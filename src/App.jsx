@@ -25,7 +25,7 @@ function Home({
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    axios.get('https://community-api.tapie.kr/board/posts')
+    axios.get('/api/board/posts')
       .then(response => {
         const data = response.data
 
@@ -43,7 +43,7 @@ function Home({
   }, [])
 
   function handleDelete(postId) {
-    axios.delete(`https://community-api.tapie.kr/board/posts/${postId}`)
+    axios.delete(`api/board/posts/${postId}`)
       .then(() => {
         setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
       })

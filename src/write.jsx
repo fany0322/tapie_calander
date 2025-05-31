@@ -69,7 +69,7 @@ function Write({ isLoggedIn, username, handleLogout, goLogin }) {
       }
 
 
-      axios.post( 'https://community-api.tapie.kr/board/posts', {
+      axios.post( '/api/board/posts', {
       "title":title,
       "content":content,
       },{

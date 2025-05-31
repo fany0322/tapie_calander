@@ -15,7 +15,7 @@ export default function Login({ setUser, setIsLoggedIn }) {
 
     try {
       const res = await axios.post(
-        'https://community-api.tapie.kr/auth/login',
+        '/api/auth/login',
         { username, password },
         { headers: { 'Content-Type': 'application/json' } }
       )

@@ -24,7 +24,7 @@ export default function Signin() {
 
     try {
       await axios.post(
-        'https://community-api.tapie.kr/auth/register',
+        '/api/auth/register',
         {
           username,
           nickname: defaultNickname,

@@ -38,7 +38,7 @@ function Edit({ isLoggedIn, username, handleLogout, goLogin }) {
       return;
     }
 
-    axios.put(`https://community-api.tapie.kr/board/posts/${id}`, {
+    axios.put(`/api/board/posts/${id}`, {
       title: inputtitle,
       content: inputcontent
     }).then(() => {
