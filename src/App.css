@@ -13,8 +13,9 @@
     justify-content: space-between;
     align-content: center;
     padding: 22px 32px;
-    width: 100vw;
+    width: 100%;
     height: 10vh;
+    overflow-x: hidden;
 }
 
 .title {
@@ -44,12 +45,13 @@
 
 main{
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: 89vh;
     gap: 10px;
     padding: 40px;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .container{
@@ -138,8 +140,8 @@ main{
     border: 1px solid #ccc; 
     border-radius: 12px;
     padding: 16px;
-    width: 210px;
-    height: 210px;
+    width: 17%;
+    height: 23vh ;
     gap:12px;
     box-sizing: border-box;
   }
@@ -154,6 +156,9 @@ main{
     color: black;
     cursor: pointer;
   }
+  .post-title:hover{
+    text-decoration: underline;
+  }
   .author {
     font-size: 12px;
     font-weight: 400;
@@ -164,6 +169,8 @@ main{
     font-size: 14px;
     font-weight: 500;
     color: #626262;
+    max-height: 100%; 
+    overflow: hidden;
   }
 .sangdanbar{
   display: flex;

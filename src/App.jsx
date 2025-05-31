@@ -5,6 +5,8 @@ import Login from './Login.jsx'
 import Signup from './Signin.jsx'
 import Write from './write.jsx'
 import axios from 'axios'
+import Edit from './edit.jsx'
+import Detail from './detail.jsx';
 
 function Home({ 
   isLoggedIn, 
@@ -14,7 +16,10 @@ function Home({
   turnoff, 
   handleLogout, 
   goLogin, 
-  gowrite 
+  gowrite,
+  goedit,
+  godetail
+
 }) {
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
@@ -40,17 +45,13 @@ function Home({
   function handleDelete(postId) {
     axios.delete(`https://community-api.tapie.kr/board/posts/${postId}`)
       .then(() => {
-        alert('삭제 성공')
+        setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
       })
       .catch(() => {
         alert('삭제 실패')
       })
   }
   
-  const handleEdit = (id) => {
-    //navigate(`/edit/${id}`)
-    alert('이동하는거 만드셈')
-  }
 
   const filteredPosts = showMyPosts
     ? posts.filter(post => post.author?.username === username)
@@ -132,9 +133,9 @@ function Home({
                       return (
                         <div key={post.id} className='wrap'>
                           <div className='sangdanbar'>
-                          <p className='post-title'>{post.title}</p>
+                          <p className='post-title' onClick={()=>godetail(post.id)}>{post.title}</p>
                           <div className="buttons-mukum">
-                            <button className="edit-btn" onClick={() => handleEdit(post.id)}>수정</button>
+                            <button className="edit-btn" onClick={()=>goedit(post.id)}>수정</button>
                             <button className="delete-btn" onClick={() => handleDelete(post.id)}>삭제</button>
                           </div>
                           </div>
@@ -157,7 +158,7 @@ function Home({
 
                   return (
                     <div key={post.id} className='wrap'>
-                      <p className='post-title'>{post.title}</p>
+                      <p className='post-title' onClick={()=>godetail(post.id)}>{post.title}</p>
                       <p className='author'>
                         {post.author?.username || '없으'} · {dateonly}
                       </p>
@@ -214,6 +215,14 @@ function App() {
     }
   }
 
+  function goedit(postId) {
+    navigate(`/edit/${postId}`)
+  }
+  
+  function godetail(postId) {
+    navigate(`/detail/${postId}`)
+  }
+
   function turnon() {
     setShowMyPosts(false)
   }
@@ -221,6 +230,7 @@ function App() {
   function turnoff() {
     if (!isLoggedIn) {
       alert('로그인 후 이용해주세요.')
+      navigate('/login')
       return
     }
     setShowMyPosts(true)
@@ -240,6 +250,8 @@ function App() {
             handleLogout={handleLogout}
             goLogin={goLogin}
             gowrite={gowrite}
+            godetail={godetail}
+            goedit={goedit}
           />
         }
       />
@@ -254,6 +266,27 @@ function App() {
           <Write
             isLoggedIn={isLoggedIn}
             username={username}
+            handleLogout={handleLogout}
+            goLogin={goLogin}
+          />
+        }
+      />
+      <Route
+        path='/edit/:id'
+        element={
+          <Edit
+            isLoggedIn={isLoggedIn}
+            username={username}
+            handleLogout={handleLogout}
+            goLogin={goLogin}
+          />
+        }
+      />
+      <Route
+        path='/detail/:id'
+        element={
+          <Detail
+            isLoggedIn={isLoggedIn}
             handleLogout={handleLogout}
             goLogin={goLogin}
           />

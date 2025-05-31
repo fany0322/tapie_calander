@@ -28,8 +28,7 @@ function Write({ isLoggedIn, username, handleLogout, goLogin }) {
           )}
         </div>
       </header>
-
-      <main>
+          {isLoggedIn? (<main>
         <div className='write-page'>
           <div className='write-title'>
             <span>글 작성</span>
@@ -50,28 +49,43 @@ function Write({ isLoggedIn, username, handleLogout, goLogin }) {
             </div>
           </div>
         </div>
-      </main>
+      </main>):(
+        <h1 style={{color:'#ff0000'}}>로그인하세요</h1>
+      )}
+      
     </>
   )
   
     function postboard( title, content) {
+      if (!isLoggedIn) {
+        alert('로그인이 필요합니다.');
+        goLogin();
+        return;
+      }
+      
+      if (!inputtitle.trim() || !inputcontent.trim()) {
+        alert('제목과 내용을 모두 입력해주세요.');
+        return;
+      }
+
+
       axios.post( 'https://community-api.tapie.kr/board/posts', {
-     "title":title,
-    "content":content,
-  },{
-    withCredentials: true,
-    headers:{
-      Authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwiZXhwIjoxNzQ4NTU5MzM4fQ.ixBHLtTycIGq0RtYcHpEpMPi2LsWuacW-I9guVPq4bU"
-    }
-}).then((response) => {
-      console.log('글 작성 성공:', response.data);
-      navigate('/');
-    }).catch((error) => {
+      "title":title,
+      "content":content,
+      },{
+        withCredentials: true,
+        headers:{
+        Authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwiZXhwIjoxNzQ4NTU5MzM4fQ.ixBHLtTycIGq0RtYcHpEpMPi2LsWuacW-I9guVPq4bU"
+        }
+      }).then((response) => {
+          console.log('글 작성 성공:', response.data);
+          navigate('/');
+        }).catch((error) => {
       console.error('글 작성 실패:', error);
       alert('글 작성이 실패했습니다. 다시 시도해주세요.');
 
-    });
-}
+      });
+    }
 }
 
 

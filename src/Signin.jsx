@@ -1,32 +1,55 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from "axios";
+import axios from 'axios';
 import './Login.css'
 
 export default function Signin() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
-  const defaultNickname = 'ubsosoimshiro'+Math.floor(Math.random() * 100000)
+  const defaultNickname = 'ubsosoimshiro' + Math.floor(Math.random() * 100000)
+
 
   const handleSignup = async (e) => {
     e.preventDefault()
 
-    await axios.post(
-      'https://community-api.tapie.kr/auth/register',
-      {
-        username,
-        nickname: defaultNickname,
-        password,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+    if (username.length < 4) {
+      alert('유저이름은 최소 4자 이상이어야 합니다.')
+      return
+    }
+    if (password.length < 3) {
+      alert('비밀번호는 최소 3자 이상이어야 합니다.')
+      return
+    }
 
-    alert('회원가입 성공!')
+    try {
+      await axios.post(
+        'https://community-api.tapie.kr/auth/register',
+        {
+          username,
+          nickname: defaultNickname,
+          password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      alert('회원가입 성공!')
+      navigate('/login')
+    } catch (err) {
+      if (err.response?.data?.detail) {
+        alert(
+          '회원가입 실패:\n' +
+            err.response.data.detail
+              .map(d => `• ${d.loc.join('.')}: ${d.msg}`)
+              .join('\n')
+        )
+      } else {
+        alert('회원가입 실패: ' + (err.response?.data?.message || '알 수 없는 오류'))
+      }
+    }
   }
 
   return (
