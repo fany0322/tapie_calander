@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Wanted Sans Variable', sans-serif;
+}
+  
+.head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 22px 32px;
+    width: 100vw;
+    height: 10vh;
+}
+  
+.title {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.login {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    gap: 16px;
+    justify-content: flex-end;
+}
+  
+.login-butten {
+    width: 120px;
+    height: 44px;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+  
+main {
+    width: 100vw;
+    height: 89vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.login_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.login_title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+  
+.login_container {
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+  
+.login_form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+  
+.login_label {
+    font-size: 14px;
+}
+  
+.login_input {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+.login_submit {
+    height: 44px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
