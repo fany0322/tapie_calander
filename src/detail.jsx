@@ -15,6 +15,7 @@ function Detail() {
       .then((res) => {
         setPost(res.data);
         setDateOnly(res.data.createdAt?.split('T')[0] || '');
+       console.log('게시글 불러오기 성공:', res.data);
       })
       .catch((err) => {
         console.error('게시글 불러오기 실패:', err);
@@ -38,9 +39,9 @@ function Detail() {
 
       <main>
         <div className='card'>
-          <p className='detail-title'>{post.title || ''}</p>
+          <p className='detail-title'>{post.title}</p>
           <p className='author'>{post.author?.username || '없음음'} · {dateOnly}</p>
-          <p className='content'>{post.content || ''}</p>
+          <p className='content' style={{ whiteSpace: 'pre-line' }}>{post.content?post.content.replace(/\//g, '\n') : ''}</p>
         </div>
       </main>
     </>
